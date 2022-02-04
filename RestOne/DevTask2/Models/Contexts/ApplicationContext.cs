@@ -8,7 +8,7 @@ namespace DevTask2.Models.Contexts
         public DbSet<Application> applications { get; set; }
         public DbSet<Applicant> applicants { get; set; }
         public DbSet<Credit> credits { get; set; }
-        public UsersContext(DbContextOptions<UsersContext> options)
+        public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options)
         {
             Database.EnsureCreated();

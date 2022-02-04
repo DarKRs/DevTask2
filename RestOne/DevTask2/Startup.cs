@@ -11,6 +11,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DevTask2.Models.Contexts;
+using Microsoft.EntityFrameworkCore;
 
 namespace DevTask2
 {
@@ -26,7 +28,8 @@ namespace DevTask2
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            string con = "Server=localhost;Database=BankDB;Trusted_Connection=True;";
+            services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(con));
             services.AddControllers();
 
         }
