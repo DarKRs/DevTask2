@@ -1,12 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using DevTask2.Models;
+using DevTask2.Models.Contexts;
 using Microsoft.AspNetCore.Mvc;
-using System;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DevTask2.Models.Contexts;
-using DevTask2.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace DevTask2.Controllers
 {
@@ -26,23 +24,28 @@ namespace DevTask2.Controllers
             }
         }
 
+        // Invoke-RestMethod http://localhost/api/application -Method GET
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Application>>> Get()
         {
             return await db.applications.ToListAsync();
         }
 
-        // GET api/users/5
-        [HttpGet("{id}")]
+        // GET api/application/5
+        // Invoke-RestMethod http://localhost/api/application/id -Method GET
+        [HttpGet("status/{id}")]
         public async Task<ActionResult<Application>> Get(int id)
         {
-            Application app= await db.applications.FirstOrDefaultAsync(x => x.ApplicationId == id);
+            Application app = await db.applications.FirstOrDefaultAsync(x => x.ApplicationId == id);
             if (app == null)
                 return NotFound();
             return new ObjectResult(app);
         }
 
-        // POST api/users
+        // POST api/application
+        //Invoke-RestMethod http://localhost/api/application/ -Method POST -Body (@{AppNum = "Test";....;...} | ConvertTo-Json) -ContentType "application/json; charset=utf-8"
+        // [Route("create")]
+        // [HttpPost("create")]
         [HttpPost]
         public async Task<ActionResult<Application>> Post(Application app)
         {
@@ -53,10 +56,14 @@ namespace DevTask2.Controllers
 
             db.applications.Add(app);
             await db.SaveChangesAsync();
+
             return Ok(app);
+
+
         }
 
-        // PUT api/users/
+        // PUT api/application/
+        //Invoke-RestMethod http://localhost/api/application/ -Method PUT -Body (@{id = 3; AppNum = "TestEdited";....;...} | ConvertTo-Json) -ContentType "application/json"
         [HttpPut]
         public async Task<ActionResult<Application>> Put(Application app)
         {
@@ -74,7 +81,7 @@ namespace DevTask2.Controllers
             return Ok(app);
         }
 
-        // DELETE api/users/5
+        // DELETE api/application/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<Application>> Delete(int id)
         {

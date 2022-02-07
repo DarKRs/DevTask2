@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace DevTask2.Utilities
 {
@@ -11,7 +9,7 @@ namespace DevTask2.Utilities
         public static string RandStr(int length)
         {
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            return new string(Enumerable.Repeat(chars, random.Next(length)+1)
+            return new string(Enumerable.Repeat(chars, random.Next(length) + 1)
               .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
@@ -25,5 +23,7 @@ namespace DevTask2.Utilities
             int range = (DateTime.Today - start).Days;
             return start.AddDays(random.Next(range));
         }
+
+
     }
 }

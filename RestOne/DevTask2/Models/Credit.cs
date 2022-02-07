@@ -1,8 +1,4 @@
-﻿using System;
-using DevTask2.Models.Enums;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using DevTask2.Models.Enums;
 using DevTask2.Utilities;
 
 namespace DevTask2.Models

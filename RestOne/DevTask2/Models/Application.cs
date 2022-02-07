@@ -1,10 +1,6 @@
-﻿using System;
-using DevTask2.Models;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using DevTask2.Utilities;
+using System;
 using System.ComponentModel.DataAnnotations;
-using DevTask2.Utilities;
 
 namespace DevTask2.Models
 {
@@ -12,7 +8,7 @@ namespace DevTask2.Models
     {
         [Key]
         public int ApplicationId { get; set; }
-        
+
         [MaxLength(250)]
         [Required]
         public string AppNum { get; set; }
@@ -41,7 +37,7 @@ namespace DevTask2.Models
             AppDate = DateTime.Today;
             BranchBank = Func.RandStr(5);
             BranchBankAddr = Func.RandStr(12);
-            CreditManagerId = Func.RandInt();
+            //CreditManagerId = Func.RandInt();
             applicant = new Applicant();
             RequestedCredit = new Credit();
         }

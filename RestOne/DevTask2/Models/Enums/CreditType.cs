@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace DevTask2.Models.Enums
+﻿namespace DevTask2.Models.Enums
 {
     public enum CreditType
     {
