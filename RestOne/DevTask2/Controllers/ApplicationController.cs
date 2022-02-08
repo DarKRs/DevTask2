@@ -44,9 +44,7 @@ namespace DevTask2.Controllers
 
         // POST api/application
         //Invoke-RestMethod http://localhost/api/application/ -Method POST -Body (@{AppNum = "Test";....;...} | ConvertTo-Json) -ContentType "application/json; charset=utf-8"
-        // [Route("create")]
-        // [HttpPost("create")]
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<ActionResult<Application>> Post(Application app)
         {
             if (app == null)

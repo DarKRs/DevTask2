@@ -21,9 +21,8 @@ namespace DevTask2
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            string con = "Server=localhost;Database=BankDB;Trusted_Connection=True;";
             services.AddLogging();
-            services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(con));
+            services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
             services.AddControllers();
             services.AddSwaggerGen(config =>
             {
