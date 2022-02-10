@@ -3,12 +3,9 @@ using DevTask2.Utilities;
 
 namespace DevTask2.Models
 {
-    public class Credit
+    public class Credit : CreditDTO
     {
         public int CreditId { get; set; }
-        public CreditType creditType { get; set; }
-        public int RequestedAmount { get; set; }
-        public string RequestedCurrency { get; set; }
         public int AnnualSalary { get; set; }
         public int MonthlySalary { get; set; }
         public string CompanyName { get; set; }

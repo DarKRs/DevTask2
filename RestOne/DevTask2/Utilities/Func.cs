@@ -17,6 +17,7 @@ namespace DevTask2.Utilities
         {
             return random.Next(max);
         }
+
         public static DateTime RandDay()
         {
             DateTime start = new DateTime(1937, 1, 1);
@@ -24,6 +25,11 @@ namespace DevTask2.Utilities
             return start.AddDays(random.Next(range));
         }
 
+        //Возвращает True с определенной процентной вероятностью (precent)
+        public static bool RandBool(int percent)
+        {
+            return random.Next(100) <= percent;
+        }
 
     }
 }

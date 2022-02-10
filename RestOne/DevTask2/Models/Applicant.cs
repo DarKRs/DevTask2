@@ -4,13 +4,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DevTask2.Models
 {
-    public class Applicant
+    public class Applicant : ApplicantDTO
     {
         [Key]
         public int Id { get; set; }
-        public string FirstName { get; set; }
-        public string MiddleName { get; set; }
-        public string LastName { get; set; }
         public DateTime DateBirth { get; set; }
         public string CityBirth { get; set; }
         public string AddressBirth { get; set; }

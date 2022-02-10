@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System;
 
 namespace DevTask2
 {
@@ -22,11 +23,17 @@ namespace DevTask2
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddLogging();
+            
             services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
-            services.AddControllers();
+            services.AddControllers().AddControllersAsServices();
+
             services.AddSwaggerGen(config =>
             {
-                config.SwaggerDoc("v1", new OpenApiInfo { Title = "DevTask2", Version = "v1" });
+                config.SwaggerDoc("v1", new OpenApiInfo { 
+                    Title = "DevTask2", 
+                    Version = "v1",
+                    Contact = new OpenApiContact { Name = "Sergei Kuznetsov", Email = "", Url = new Uri("https://github.com/DarKRs") },
+                });
             });
 
         }
@@ -41,6 +48,7 @@ namespace DevTask2
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "DevTask2 v1")) ;
             }
 
+            
             app.UseHttpsRedirection();
 
             app.UseRouting();

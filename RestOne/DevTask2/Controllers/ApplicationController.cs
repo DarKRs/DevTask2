@@ -2,6 +2,7 @@
 using DevTask2.Models.Contexts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,9 +14,11 @@ namespace DevTask2.Controllers
     public class ApplicationController : ControllerBase
     {
         ApplicationContext db;
-        public ApplicationController(ApplicationContext context)
+        ScoringController sc;
+        public ApplicationController(ApplicationContext context, ScoringController scoringController)
         {
             db = context;
+            sc = scoringController;
             if (!db.applications.Any())
             {
                 db.applications.Add(new Application());
@@ -25,10 +28,10 @@ namespace DevTask2.Controllers
         }
 
         // Invoke-RestMethod http://localhost/api/application -Method GET
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Application>>> Get()
+        [HttpGet("status")]
+        public async Task<ActionResult<IEnumerable<ApplicationDTO>>> Get()
         {
-            return await db.applications.ToListAsync();
+            return await db.applications.Select(x => (ApplicationDTO)x).ToListAsync();
         }
 
         // GET api/application/5
@@ -39,7 +42,7 @@ namespace DevTask2.Controllers
             Application app = await db.applications.FirstOrDefaultAsync(x => x.ApplicationId == id);
             if (app == null)
                 return NotFound();
-            return new ObjectResult(app);
+            return new ObjectResult((ApplicationDTO)app);
         }
 
         // POST api/application
@@ -54,15 +57,15 @@ namespace DevTask2.Controllers
 
             db.applications.Add(app);
             await db.SaveChangesAsync();
-
+            app.SetScoring(sc.Get(), DateTime.Today);
+            db.Update(app);
+            await db.SaveChangesAsync();
             return Ok(app);
-
-
         }
 
         // PUT api/application/
         //Invoke-RestMethod http://localhost/api/application/ -Method PUT -Body (@{id = 3; AppNum = "TestEdited";....;...} | ConvertTo-Json) -ContentType "application/json"
-        [HttpPut]
+        [HttpPut("edit")]
         public async Task<ActionResult<Application>> Put(Application app)
         {
             if (app == null)
@@ -80,7 +83,7 @@ namespace DevTask2.Controllers
         }
 
         // DELETE api/application/5
-        [HttpDelete("{id}")]
+        [HttpDelete("delete/{id}")]
         public async Task<ActionResult<Application>> Delete(int id)
         {
             Application app = db.applications.FirstOrDefault(x => x.ApplicationId == id);
@@ -92,6 +95,7 @@ namespace DevTask2.Controllers
             await db.SaveChangesAsync();
             return Ok(app);
         }
+
     }
 }
 
