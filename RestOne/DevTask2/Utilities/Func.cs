@@ -31,5 +31,12 @@ namespace DevTask2.Utilities
             return random.Next(100) <= percent;
         }
 
+
+        //Используется для ScoringDate. Условно банк работает с 8.00 до 18.00
+        public static DateTime AddRndTime(this DateTime dt)
+        {
+           return dt.AddHours(random.Next(8, 18)).AddMinutes(random.Next(0, 60));
+        }
+
     }
 }

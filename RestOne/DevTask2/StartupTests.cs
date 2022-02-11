@@ -12,9 +12,9 @@ using System.Reflection;
 
 namespace DevTask2
 {
-    public class Startup
+    public class StartupTests
     {
-        public Startup(IConfiguration configuration)
+        public StartupTests(IConfiguration configuration)
         {
             Configuration = configuration;
         }
@@ -24,23 +24,10 @@ namespace DevTask2
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddLogging();
-            
-            services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
+            //  services.AddDbContext<ApplicationContext>(options => options.UseInMemoryDatabase(databaseName: "TestDB"));
+            string con = "Server=localhost;Database=TestDB;Trusted_Connection=True;";
+            services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(con));
             services.AddControllers().AddControllersAsServices();
-
-            services.AddSwaggerGen(config =>
-            {
-                config.SwaggerDoc("v1", new OpenApiInfo { 
-                    Title = "DevTask2", 
-                    Version = "v1",
-                    Contact = new OpenApiContact { Name = "Sergei Kuznetsov", Email = "", Url = new Uri("https://github.com/DarKRs") },
-                });
-
-                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                config.IncludeXmlComments(xmlPath);
-            });
 
         }
 
@@ -50,17 +37,13 @@ namespace DevTask2
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "DevTask2 v1")) ;
+
             }
 
             
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
-
-            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace DevTask2.Models.Contexts
 {
@@ -11,6 +12,15 @@ namespace DevTask2.Models.Contexts
             : base(options)
         {
             Database.EnsureCreated();
+            if (!applications.Any())
+            {
+                var app = new Application();
+                app.SetRandValues();
+                applications.Add(app);
+                applications.Add(new Application() { AppNum = "Test123" });
+                SaveChanges();
+            }
+            
         }
     }
 }

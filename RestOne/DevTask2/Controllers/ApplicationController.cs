@@ -1,5 +1,6 @@
 ﻿using DevTask2.Models;
 using DevTask2.Models.Contexts;
+using DevTask2.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -19,12 +20,6 @@ namespace DevTask2.Controllers
         {
             db = context;
             sc = scoringController;
-            if (!db.applications.Any())
-            {
-                db.applications.Add(new Application());
-                db.applications.Add(new Application());
-                db.SaveChanges();
-            }
         }
 
         // Invoke-RestMethod http://localhost/api/application -Method GET
@@ -34,7 +29,7 @@ namespace DevTask2.Controllers
             return await db.applications.Select(x => (ApplicationDTO)x).ToListAsync();
         }
 
-        // GET api/application/5
+        // GET api/application/status/5
         // Invoke-RestMethod http://localhost/api/application/id -Method GET
         [HttpGet("status/{id}")]
         public async Task<ActionResult<Application>> Get(int id)
@@ -47,6 +42,22 @@ namespace DevTask2.Controllers
 
         // POST api/application
         //Invoke-RestMethod http://localhost/api/application/ -Method POST -Body (@{AppNum = "Test";....;...} | ConvertTo-Json) -ContentType "application/json; charset=utf-8"
+        /// <summary>
+        /// Creates a application
+        /// </summary>
+        /// <param name="app"></param>
+        /// <returns>A newly created application</returns>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST /api/Application/create
+        ///     {
+        ///        "AppNum": "test123"
+        ///     }
+        ///
+        /// </remarks>
+        /// <response code="201">Returns the newly created item</response>
+        /// <response code="400">If the item is null</response>
         [HttpPost("create")]
         public async Task<ActionResult<Application>> Post(Application app)
         {
@@ -57,7 +68,7 @@ namespace DevTask2.Controllers
 
             db.applications.Add(app);
             await db.SaveChangesAsync();
-            app.SetScoring(sc.Get(), DateTime.Today);
+            app.SetScoring(sc.Get(), DateTime.Today.AddRndTime());
             db.Update(app);
             await db.SaveChangesAsync();
             return Ok(app);

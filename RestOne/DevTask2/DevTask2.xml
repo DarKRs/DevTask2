@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DevTask2</name>
+    </assembly>
+    <members>
+        <member name="M:DevTask2.Controllers.ApplicationController.Post(DevTask2.Models.Application)">
+             <summary>
+             Creates a application
+             </summary>
+             <param name="app"></param>
+             <returns>A newly created application</returns>
+             <remarks>
+             Sample request:
+            
+                 POST /api/Application/create
+                 {
+                    "AppNum": "test123"
+                 }
+            
+             </remarks>
+             <response code="201">Returns the newly created item</response>
+             <response code="400">If the item is null</response>
+        </member>
+    </members>
+</doc>

@@ -8,6 +8,8 @@ namespace DevTask2.Models
     {
         [Key]
         public int Id { get; set; }
+
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime DateBirth { get; set; }
         public string CityBirth { get; set; }
         public string AddressBirth { get; set; }
