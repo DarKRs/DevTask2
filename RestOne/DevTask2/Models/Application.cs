@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Swashbuckle.AspNetCore.Annotations;
 
+
 namespace DevTask2.Models
 {
     public class Application 
@@ -17,7 +18,6 @@ namespace DevTask2.Models
         public string AppNum { get; set; }
 
         [Required]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime AppDate { get; set; }
 
         [Required]
@@ -34,28 +34,9 @@ namespace DevTask2.Models
         public Credit RequestedCredit { get; set; }
         
         public bool? ScoringStatus { get; set; }
-        [DefaultValue(null)]
         public DateTime? ScoringDate { get; set; }
 
-      /*  internal Application()
-        {
-            AppNum = Func.RandStr(8);
-            AppDate = DateTime.Today;
-            BranchBank = Func.RandStr(5);
-            BranchBankAddr = Func.RandStr(12);
-            CreditManagerId = Func.RandInt();
-            applicant = new Applicant();
-            RequestedCredit = new Credit();
-            ScoringStatus = null;
-            ScoringDate = null;
-        }*/
-
-        public Application()
-        {
-
-        }
-
-        public void SetRandValues()
+       public Application()
         {
             AppNum = Func.RandStr(8);
             AppDate = DateTime.Today;

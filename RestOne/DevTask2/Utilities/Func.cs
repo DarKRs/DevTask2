@@ -8,7 +8,7 @@ namespace DevTask2.Utilities
         private static Random random = new Random();
         public static string RandStr(int length)
         {
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz";
             return new string(Enumerable.Repeat(chars, random.Next(length) + 1)
               .Select(s => s[random.Next(s.Length)]).ToArray());
         }

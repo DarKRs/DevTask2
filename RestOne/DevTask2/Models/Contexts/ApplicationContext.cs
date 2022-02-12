@@ -14,10 +14,8 @@ namespace DevTask2.Models.Contexts
             Database.EnsureCreated();
             if (!applications.Any())
             {
-                var app = new Application();
-                app.SetRandValues();
-                applications.Add(app);
                 applications.Add(new Application() { AppNum = "Test123" });
+                applications.Add(new Application());
                 SaveChanges();
             }
             

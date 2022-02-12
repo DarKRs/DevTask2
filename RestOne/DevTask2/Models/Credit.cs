@@ -21,5 +21,6 @@ namespace DevTask2.Models
             CompanyName = Func.RandStr(12);
             Comment = Func.RandStr(30);
         }
+
     }
 }
